@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Form</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="box">
+        <div class="form">
+            <h2>Login Form</h2>
+            <form id="loginForm">
+                <div class="inputbox">
+                    <input type="text" value="" id="username" required>
+                    <span>Username</span>
+                </div>
+                <div class="inputbox">
+                    <input type="email" value="" id="email" required>
+                    <span>E-mail</span>
+                </div>
+                <div class="inputbox">
+                    <input type="text" value="" id="phone" required>
+                    <span>Phone Number</span>
+                </div>
+                <input type="submit" value="Submit" class="sub" id="submit">
+                <br><br>
+                <span class="note">Note: "Remember that It Is Just for Formality You Can Directly Login Without any Sign up"</span> 
+            </form>
+        </div>
+    </div>
+
+
+    
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBs5oOWV-5J2yAvKu5BVUXbTIvrUOcMedg",
+            authDomain: "creativetutoria.firebaseapp.com",
+            projectId: "creativetutoria",
+            storageBucket: "creativetutoria.appspot.com",
+            messagingSenderId: "909450767275",
+            appId: "1:909450767275:web:f7526f5618adb0f78e40ee"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        
+        // Get a reference to the database service
+        const db = getDatabase(app);
+
+        document.getElementById("loginForm").addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+
+            set(ref(db, 'user/' + username), {
+                username: username,
+                email: email,
+                PhoneNumber: phone
+            })
+            .then(() => {
+                alert("Login Successful!");
+                window.location.href = "./home.html"; // Redirect to home page
+            })
+            .catch((error) => {
+                console.error("Error writing to database: ", error);
+            });
+        });
+    </script>
+</body>
+</html>
